@@ -1,0 +1,10 @@
+{
+  "name": "SmartPOS — Responsive POS Billing & Inventory Management",
+  "description": "Production-grade responsive Point of Sale billing, thermal receipt printing (58mm/80mm), stock movements, returns, and inventory management system with Spring Boot 3 and PostgreSQL architecture.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

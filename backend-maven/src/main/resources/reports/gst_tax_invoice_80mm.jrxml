@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio for SmartPOS Indian GST Tax Invoices -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports"
+              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+              xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd"
+              name="gst_tax_invoice_80mm" pageWidth="226" pageHeight="842" columnWidth="206"
+              leftMargin="10" rightMargin="10" topMargin="10" bottomMargin="10" isIgnorePagination="true">
+
+    <parameter name="BUSINESS_NAME" class="java.lang.String"/>
+    <parameter name="BUSINESS_ADDRESS" class="java.lang.String"/>
+    <parameter name="BUSINESS_GSTIN" class="java.lang.String"/>
+    <parameter name="BUSINESS_PHONE" class="java.lang.String"/>
+    <parameter name="INVOICE_NUMBER" class="java.lang.String"/>
+    <parameter name="SALE_DATE" class="java.lang.String"/>
+    <parameter name="CUSTOMER_NAME" class="java.lang.String"/>
+    <parameter name="CUSTOMER_GSTIN" class="java.lang.String"/>
+    <parameter name="PLACE_OF_SUPPLY" class="java.lang.String"/>
+    <parameter name="CASHIER_NAME" class="java.lang.String"/>
+    <parameter name="SUBTOTAL" class="java.math.BigDecimal"/>
+    <parameter name="CGST_AMOUNT" class="java.math.BigDecimal"/>
+    <parameter name="SGST_AMOUNT" class="java.math.BigDecimal"/>
+    <parameter name="IGST_AMOUNT" class="java.math.BigDecimal"/>
+    <parameter name="TOTAL_AMOUNT" class="java.math.BigDecimal"/>
+    <parameter name="AMOUNT_IN_WORDS" class="java.lang.String"/>
+    <parameter name="UPI_ID" class="java.lang.String"/>
+
+    <field name="productName" class="java.lang.String"/>
+    <field name="hsnCode" class="java.lang.String"/>
+    <field name="quantity" class="java.lang.Integer"/>
+    <field name="unitPrice" class="java.math.BigDecimal"/>
+    <field name="lineTotal" class="java.math.BigDecimal"/>
+    <field name="taxRate" class="java.math.BigDecimal"/>
+
+    <title>
+        <band height="120">
+            <staticText>
+                <reportElement x="0" y="0" width="206" height="15"/>
+                <textElement textAlignment="Center">
+                    <font fontName="SansSerif" size="10" isBold="true"/>
+                </textElement>
+                <text><![CDATA[TAX INVOICE]]></text>
+            </staticText>
+            <textField>
+                <reportElement x="0" y="15" width="206" height="18"/>
+                <textElement textAlignment="Center">
+                    <font fontName="SansSerif" size="12" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{BUSINESS_NAME}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="33" width="206" height="20"/>
+                <textElement textAlignment="Center">
+                    <font fontName="SansSerif" size="7"/>
+                </textElement>
+                <textFieldExpression><![CDATA[$P{BUSINESS_ADDRESS}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="53" width="206" height="12"/>
+                <textElement textAlignment="Center">
+                    <font fontName="SansSerif" size="8" isBold="true"/>
+                </textElement>
+                <textFieldExpression><![CDATA["GSTIN: " + $P{BUSINESS_GSTIN}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="68" width="206" height="1"/>
+            </line>
+            <textField>
+                <reportElement x="0" y="70" width="103" height="12"/>
+                <textElement><font fontName="SansSerif" size="7"/></textElement>
+                <textFieldExpression><![CDATA["Inv: " + $P{INVOICE_NUMBER}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="103" y="70" width="103" height="12"/>
+                <textElement textAlignment="Right"><font fontName="SansSerif" size="7"/></textElement>
+                <textFieldExpression><![CDATA[$P{SALE_DATE}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="82" width="206" height="12"/>
+                <textElement><font fontName="SansSerif" size="7"/></textElement>
+                <textFieldExpression><![CDATA["Cust: " + $P{CUSTOMER_NAME}]]></textFieldExpression>
+            </textField>
+            <textField isBlankWhenNull="true">
+                <reportElement x="0" y="94" width="206" height="12"/>
+                <textElement><font fontName="SansSerif" size="7" isBold="true"/></textElement>
+                <textFieldExpression><![CDATA[$P{CUSTOMER_GSTIN} != null && !$P{CUSTOMER_GSTIN}.isEmpty() ? "Cust GSTIN: " + $P{CUSTOMER_GSTIN} : "POS: " + $P{PLACE_OF_SUPPLY}]]></textFieldExpression>
+            </textField>
+            <line>
+                <reportElement x="0" y="112" width="206" height="1"/>
+            </line>
+        </band>
+    </title>
+
+    <columnHeader>
+        <band height="15">
+            <staticText>
+                <reportElement x="0" y="0" width="90" height="12"/>
+                <textElement><font fontName="SansSerif" size="7" isBold="true"/></textElement>
+                <text><![CDATA[Item / HSN]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="90" y="0" width="25" height="12"/>
+                <textElement textAlignment="Center"><font fontName="SansSerif" size="7" isBold="true"/></textElement>
+                <text><![CDATA[Qty]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="115" y="0" width="40" height="12"/>
+                <textElement textAlignment="Right"><font fontName="SansSerif" size="7" isBold="true"/></textElement>
+                <text><![CDATA[Rate]]></text>
+            </staticText>
+            <staticText>
+                <reportElement x="155" y="0" width="51" height="12"/>
+                <textElement textAlignment="Right"><font fontName="SansSerif" size="7" isBold="true"/></textElement>
+                <text><![CDATA[Total (₹)]]></text>
+            </staticText>
+        </band>
+    </columnHeader>
+
+    <detail>
+        <band height="22">
+            <textField textAdjust="StretchHeight">
+                <reportElement x="0" y="0" width="90" height="10"/>
+                <textElement><font fontName="SansSerif" size="7" isBold="true"/></textElement>
+                <textFieldExpression><![CDATA[$F{productName}]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="0" y="10" width="90" height="10"/>
+                <textElement><font fontName="SansSerif" size="6"/></textElement>
+                <textFieldExpression><![CDATA["HSN: " + $F{hsnCode} + " (" + $F{taxRate} + "%)"]]></textFieldExpression>
+            </textField>
+            <textField>
+                <reportElement x="90" y="0" width="25" height="14"/>
+                <textElement textAlignment="Center"><font fontName="SansSerif" size="7"/></textElement>
+                <textFieldExpression><![CDATA[$F{quantity}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00">
+                <reportElement x="115" y="0" width="40" height="14"/>
+                <textElement textAlignment="Right"><font fontName="SansSerif" size="7"/></textElement>
+                <textFieldExpression><![CDATA[$F{unitPrice}]]></textFieldExpression>
+            </textField>
+            <textField pattern="#,##0.00">
+                <reportElement x="155" y="0" width="51" height="14"/>
+                <textElement textAlignment="Right"><font fontName="SansSerif" size="7" isBold="true"/></textElement>
+                <textFieldExpression><![CDATA[$F{lineTotal}]]></textFieldExpression>
+            </textField>
+        </band>
+    </detail>
+
+    <summary>
+        <band height="140">
+            <line>
+                <reportElement x="0" y="2" width="206" height="1"/>
+            </line>
+            <staticText>
+                <reportElement x="0" y="6" width="100" height="12"/>
+                <textElement><font fontName="SansSerif" size="7"/></textElement>
+                <text><![CDATA[Taxable Subtotal:]]></text>
+            </staticText>
+            <textField pattern="₹ #,##0.00">
+                <reportElement x="100" y="6" width="106" height="12"/>
+                <textElement textAlignment="Right"><font fontName="SansSerif" size="7"/></textElement>
+                <textFieldExpression><![CDATA[$P{SUBTOTAL}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="18" width="100" height="12"/>
+                <textElement><font fontName="SansSerif" size="7"/></textElement>
+                <text><![CDATA[Central GST (CGST):]]></text>
+            </staticText>
+            <textField pattern="₹ #,##0.00">
+                <reportElement x="100" y="18" width="106" height="12"/>
+                <textElement textAlignment="Right"><font fontName="SansSerif" size="7"/></textElement>
+                <textFieldExpression><![CDATA[$P{CGST_AMOUNT}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="30" width="100" height="12"/>
+                <textElement><font fontName="SansSerif" size="7"/></textElement>
+                <text><![CDATA[State GST (SGST):]]></text>
+            </staticText>
+            <textField pattern="₹ #,##0.00">
+                <reportElement x="100" y="30" width="106" height="12"/>
+                <textElement textAlignment="Right"><font fontName="SansSerif" size="7"/></textElement>
+                <textFieldExpression><![CDATA[$P{SGST_AMOUNT}]]></textFieldExpression>
+            </textField>
+
+            <staticText>
+                <reportElement x="0" y="42" width="100" height="12"/>
+                <textElement><font fontName="SansSerif" size="7"/></textElement>
+                <text><![CDATA[Integrated GST (IGST):]]></text>
+            </staticText>
+            <textField pattern="₹ #,##0.00">
+                <reportElement x="100" y="42" width="106" height="12"/>
+                <textElement textAlignment="Right"><font fontName="SansSerif" size="7"/></textElement>
+                <textFieldExpression><![CDATA[$P{IGST_AMOUNT}]]></textFieldExpression>
+            </textField>
+
+            <line>
+                <reportElement x="0" y="56" width="206" height="1"/>
+            </line>
+            <staticText>
+                <reportElement x="0" y="60" width="100" height="14"/>
+                <textElement><font fontName="SansSerif" size="9" isBold="true"/></textElement>
+                <text><![CDATA[GRAND TOTAL:]]></text>
+            </staticText>
+            <textField pattern="₹ #,##0.00">
+                <reportElement x="100" y="60" width="106" height="14"/>
+                <textElement textAlignment="Right"><font fontName="SansSerif" size="9" isBold="true"/></textElement>
+                <textFieldExpression><![CDATA[$P{TOTAL_AMOUNT}]]></textFieldExpression>
+            </textField>
+
+            <textField textAdjust="StretchHeight">
+                <reportElement x="0" y="76" width="206" height="18"/>
+                <textElement><font fontName="SansSerif" size="6" isItalic="true"/></textElement>
+                <textFieldExpression><![CDATA["Amount in Words: " + $P{AMOUNT_IN_WORDS}]]></textFieldExpression>
+            </textField>
+
+            <textField>
+                <reportElement x="0" y="96" width="206" height="12"/>
+                <textElement textAlignment="Center"><font fontName="SansSerif" size="7" isBold="true"/></textElement>
+                <textFieldExpression><![CDATA["UPI VPA: " + $P{UPI_ID}]]></textFieldExpression>
+            </textField>
+            <staticText>
+                <reportElement x="0" y="110" width="206" height="18"/>
+                <textElement textAlignment="Center"><font fontName="SansSerif" size="6"/></textElement>
+                <text><![CDATA[Thank you for shopping! Certified that particulars are true and correct.]]></text>
+            </staticText>
+        </band>
+    </summary>
+</jasperReport>
